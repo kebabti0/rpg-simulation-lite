@@ -473,7 +473,7 @@ def shop(player, stage_index=0):
         
         print_divider()
         print()
-        slow_text("Options:\n- Type the item name to buy (you'll be asked for quantity)\n- Type 'inventory' to view your inventory\n- Type 'exit' to leave the shop.")
+        print("Options:\n- Type the item name to buy (you'll be asked for quantity)\n- Type 'inventory' to view your inventory\n- Type 'exit' to leave the shop.")
         print()
 
         choice = input("> ").strip()
