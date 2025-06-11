@@ -46,30 +46,48 @@ def main():
 
         while post_battle and stage_index < len(enemy_order):
             slow_text("What do you want to do next? ")
-            slow_text("1. Continue to next stage")
-            slow_text(f"2. Fight {enemy.name} again")
-            slow_text("3. Exit the game")
-            choice = input("> ").strip()
-
-            if choice == "1":
-                stage_index += 1
-                post_battle = False
-                if stage_index < len(enemy_order):
-                    slow_text(f"Moving to stage {stage_index + 1}...")
+            if stage_index < len(enemy_order) - 1:
+                # Any stage except the last one
+                slow_text("1. Continue to next stage")
+                slow_text(f"2. Fight {enemy.name} again")
+                slow_text("3. Exit the game")
+                choice = input("> ").strip()
+                if choice == "1":
+                    stage_index += 1
+                    post_battle = False
+                    if stage_index < len(enemy_order):
+                        slow_text(f"Moving to stage {stage_index + 1}...")
+                        save_game(player, stage_index, post_battle)
+                    break
+                elif choice == "2":
+                    post_battle = False
                     save_game(player, stage_index, post_battle)
-                break
-            elif choice == "2":
-                post_battle = False
-                save_game(player, stage_index, post_battle)
-                break
-            elif choice == "3":
-                save_game(player, stage_index, post_battle)
-                slow_text("Thanks for playing!")
-                return
+                    break
+                elif choice == "3":
+                    save_game(player, stage_index, post_battle)
+                    slow_text("Thanks for playing!")
+                    return
+                else:
+                    clear_screen()
+                    slow_text("Invalid choice. Please try again.")
             else:
-                clear_screen()
-                slow_text("Invalid choice. Please try again.")
-        
+                # Last boss defeated
+                slow_text("1. Retry the game")
+                slow_text("2. Exit the game")
+                choice = input("> ").strip()
+                if choice == "1":
+                    stage_index = 0
+                    player = create_player()
+                    post_battle = False
+                    continue
+                elif choice == "2":
+                    slow_text("Thanks for playing!")
+                    save_game(player, stage_index, post_battle)
+                    break
+                else:
+                    clear_screen()
+                    slow_text("Invalid choice. Please try again.")
+                    
 # Run the main function to start the game
 if __name__ == "__main__":  
     main() 
